@@ -8,7 +8,7 @@ It's a **demonstration** only image viewer made with Qt6.
 ---
 
 - Opens an image in a time independent of the count of images in a directory where it is located.
-- Decodes 8.3  file names to long file names with Win API (`GetLongPathNameW`). A 8.3 can be faced on a user input from Windows Exlorer:
+- Decodes 8.3  file names to long file names with Win API (`GetLongPathNameW`). A 8.3 can be faced on a user input of a file with long path (260+ chars) from disc C from Windows Exlorer:
 on Drag'n'Drop and when a user opens an image with a double click (the image path is passed as a command line argument to the program.)
 - Handles images of the directory in a separated thread with `QtConcurrent::run`.
 - Handles the directory only once, until it is changes. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's no needed to do, just find the file by name in the list structure.)
