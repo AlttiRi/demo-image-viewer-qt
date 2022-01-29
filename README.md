@@ -23,7 +23,7 @@ So the adjacent images should be preloaded in a separate thread, but I did not i
 
 Here is the example of the console log, after the program is started (~70 ms):
 
-The speed results for 350 KB image with a directory with 30000+ files (Run it with QT Creator to look at the `qDebug()` logs):
+The speed results for 350 KB image with a directory with 30000+ files (Run it with Qt Creator to look at the `qDebug()` logs):
 - _[timer][displayImage]_: **84 ms** — time to display the image.
 
 **At this moment the image is visible.**
