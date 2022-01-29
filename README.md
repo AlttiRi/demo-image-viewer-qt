@@ -11,7 +11,7 @@ It's a **demonstration** only image viewer made with Qt6.
 - Decodes 8.3  file names to long file names with Win API (`GetLongPathNameW`). A 8.3 can be faced on a user input of a file with long path (260+ chars) from disc C from Windows Exlorer:
 on Drag'n'Drop and when a user opens an image with a double click (the image path is passed as a command line argument to the program.)
 - Handles images of the directory in a separated thread with `QtConcurrent::run`.
-- Handles the directory only once, until it is changes. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's no needed to do, just find the file by name in the list structure.)
+- Handles the directory only once, until it is changed. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's no needed to do, just find the file by name in the list structure.)
 - Sorts by mtime, btime, size.
 - Updates the image position (in the title) on the sorting change.
 - All long time taking operations log the execution time in the console with `qDebug()`.
