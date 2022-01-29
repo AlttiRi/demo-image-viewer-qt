@@ -1,7 +1,7 @@
 # demo-image-viewer
 
 It's a **demonstration** only image viewer made with Qt6.
-The binaries are available.
+[The binaries are available](https://github.com/AlttiRi/demo-image-viewer/releases).
 
 ![Screenshot](https://user-images.githubusercontent.com/16310547/151670175-122043d2-725b-4997-9669-9a147a56d1b2.png)
 
