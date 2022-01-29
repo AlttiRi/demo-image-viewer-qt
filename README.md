@@ -34,7 +34,7 @@ That is performed in a background thread:
 
 ---
 
-Note: Do NOT use code that calls methods of QFileInfo in `std::sort`. It's incredibly slow. 
+Note: Do **NOT** use code that calls methods of `QFileInfo` in `std::sort`. **It's incredibly slow. **
 
 That is up to 600 times slower
 ```c++
@@ -56,3 +56,5 @@ than that
 3200-3600 ms vs 6 ms.
 
 So, store all required fields of `QFileInfo` in your own data struct.
+
+Try by yourself (uncomment the line 307 and commend lines 298-304): https://github.com/AlttiRi/demo-image-viewer/blob/ad9ac9b1c9d78244462064983e676542700e96d9/core.h#L296-L311
