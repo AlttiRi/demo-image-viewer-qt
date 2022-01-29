@@ -14,25 +14,28 @@ on Drag'n'Drop and when a user opens an image with a double click (the image pat
 - Handles the directory only once, until it is changes. (For example, drag'n'dropping a file from the same directore will not trigger the directory parsing, since it's no needed to do, just find the file by name in the list structure.)
 - Sorts by mtime, btime, size.
 - Updates the image position (in the title) on the sorting change.
-
+- All long time taking operations log the time in the console with `qDebug()`.
 
 Opening of the next images is for O(n) (It depends of a image size: 20 ms for 150 KB, 170 ms for 10 MB, 700 ms for 36 MB). 
 So the adjacent images should be preloaded in a separate thread, but I did not implemented that in this _demo_ program. 
 
 ---
 
+Here is the example of the console log:
+
 The speed results for 350 KB image with a directory with 30000+ files (Run it with QT Creator to look at the `qDebug()` logs):
-[timer][displayImage]: 84 ms — time to desplay the image
-at this moment the image is displayed.
+- _[timer][displayImage]_: **84 ms** — time to display the image. 
+
+**At this moment the image is visible.**
 
 That is performed in a background thread:
-- [timer][entryInfoList]: **143 ms** — time to get the list with QFileInfo of all files (31973) in the directory
-- [timer][filterBySupportedExts]: **6 ms** — time filter that list to exlude unsupported files
-- [filterBySupportedExts] fileInfoList.size:         **31973** 
-- [filterBySupportedExts] fileInfoListFiltered.size: **30006**
-- [timer][initFileEntryList]: **200 ms**  — time to create a list of data structure with all necessary information for all filtered files (30006)
-- [timer][initFileList]: **352 ms** — the **total time** of the work with directory files ~(143 + 6 + 200)
-- [timer][sortByMtime]: **6 ms** — to sort all files by mtime
+- _[timer][entryInfoList]_: **143 ms** — time to get the list with QFileInfo of all files (31973) in the directory
+- _[timer][filterBySupportedExts]_: **6 ms** — time filter that list to exlude unsupported files
+- _[filterBySupportedExts] fileInfoList.size_:         **31973** 
+- _[filterBySupportedExts] fileInfoListFiltered.size_: **30006**
+- _[timer][initFileEntryList]_: **200 ms**  — time to create a list of data structure with all necessary information for all filtered files (30006)
+- _[timer][initFileList]_: **352 ms** — the **total time** of the work with directory files ~(143 + 6 + 200)
+- _[timer][sortByMtime]_: **6 ms** — to sort all files by mtime
 
 ---
 
