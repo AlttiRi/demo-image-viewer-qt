@@ -39,7 +39,7 @@ That is performed in a background thread:
 
 ---
 
-Note: Do **NOT** use code that calls methods of `QFileInfo` in `std::sort`. **It's incredibly slow. **
+Note: Do **NOT** use code that calls methods of `QFileInfo` in `std::sort`. **It's incredibly slow.**
 
 That is up to **600 times slower**
 ```c++
