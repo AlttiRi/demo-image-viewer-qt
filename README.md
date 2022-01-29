@@ -15,7 +15,7 @@ on Drag'n'Drop and when a user opens an image with a double click (the image pat
 - Updates the image position (in the title) on the sorting change.
 
 Opening of the next images is for O(n) (It depends of a image size: 20 ms for 150 KB, 170 ms for 10 MB, 700 ms for 36 MB). 
-So the adjacent images should be preloaded in a separate thread, but I did not implemented that in this demo program. 
+So the adjacent images should be preloaded in a separate thread, but I did not implemented that in this _demo_ program. 
 
 ---
 
