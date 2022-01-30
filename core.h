@@ -74,6 +74,7 @@ public:
     static inline DirState NotReady    = DirState("NotReady");
     static inline DirState Preview     = DirState("Preview");
     static inline DirState Unsupported = DirState("Unsupported");
+    static inline DirState NotExists   = DirState("NotExists");
 };
 
 class DirectoryFileList {
@@ -186,6 +187,9 @@ public:
         QString inputDirPath  = "";
 
         QFileInfo fileInfo(path);
+        if (!fileInfo.exists()) {
+            return DS::NotExists;
+        }
         bool isDir = fileInfo.isDir();
         if (fileInfo.isDir()) {
             inputDirPath = fileInfo.absoluteFilePath();
