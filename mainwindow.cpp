@@ -139,8 +139,8 @@ void MainWindow::updateStatusBar() {
     QString size = locale.formattedDataSize(entry.size);
     ui->statusbar->showMessage(
                 "Size: "  + size                                            + ",   " +
-                "mtime: " + entry.mtime.toString("yyyy.MM.dd hh:mm:ss.zzz") + ",   " +
-                "btime: " + entry.btime.toString("yyyy.MM.dd hh:mm:ss.zzz") + ",   " +
+                "mtime: " + entry.mtime.toTimeSpec(Qt::OffsetFromUTC).toString("yyyy.MM.dd hh:mm:ss.zzz") + "Z,   " +
+                "btime: " + entry.btime.toTimeSpec(Qt::OffsetFromUTC).toString("yyyy.MM.dd hh:mm:ss.zzz") + "Z,   " +
                 QString::number(image.width()) + "x" + QString::number(image.height())
     );
 }
