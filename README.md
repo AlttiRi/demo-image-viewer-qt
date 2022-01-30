@@ -14,6 +14,7 @@ on Drag'n'Drop and when a user opens an image with a double click (the image pat
 - Handles the directory only once, until it is changed. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's no needed to do, just find the file by name in the list structure.)
 - Sorts by mtime, btime, size.
 - Updates the image position (in the title) on the sorting change.
+- Lists hidden files (`QDir::Hidden`).
 - All long time taking operations log the execution time in the console with `qDebug()`.
 
 Opening of the next images is for O(n) (It depends of an image size: 20 ms for 150 KB, 170 ms for 10 MB, 700 ms for 36 MB). 
