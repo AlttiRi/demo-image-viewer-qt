@@ -9,7 +9,7 @@ It's a **demonstration** only image viewer made with Qt6.
 
 - Opens an image in a time independent of the count of images in a directory where it is located.
 - Decodes 8.3  file names to long file names with Win API (`GetLongPathNameW`). An 8.3 can be faced on a user input of a file with long path (260+ chars) from disc C from Windows Explorer:
-on Drag'n'Drop and when a user opens an image with a double click (the image path is passed as a command line argument to the program.)
+  on Drag'n'Drop and when a user opens an image with a double click (the image path is passed as a command line argument to the program.)
 - Handles the images of the directory in a separated thread with `QtConcurrent::run`.
 - Handles the directory only once, until it is changed. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's not needed to do, just find the file by name in the list structure.)
 - Preloades the adjacent images in a separate thread.
@@ -31,7 +31,7 @@ The speed results for 350 KB image with a directory with 30000+ files (Run it wi
 That is performed in a background thread:
 - _[timer][entryInfoList]_: **143 ms** — time to get the list with QFileInfo of all files (31973) in the directory
 - _[timer][filterBySupportedExts]_: **6 ms** — time filter that list to exclude the unsupported files
-- _[filterBySupportedExts] fileInfoList.size_:         **31973** 
+- _[filterBySupportedExts] fileInfoList.size_:         **31973**
 - _[filterBySupportedExts] fileInfoListFiltered.size_: **30006**
 - _[timer][initFileEntryList]_: **200 ms**  — time to create a list of data structure with all necessary information for all filtered files (30006)
 - _[timer][initFileList]_: **352 ms** — the **total time** of the work with directory files ~(143 + 6 + 200)
