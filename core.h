@@ -58,9 +58,9 @@ class Cache {
     static inline int num = 0;
 public:
     static inline QMap<QString, QFuture<QPixmap>> map;
-    static void add(QString path) {
+    static void add(const QString &path) {
         if (Cache::has(path)) {
-            qDebug() << "has:" << path;
+            // qDebug() << "has:" << path;
             return;
         }
         qDebug() << "cache:" << path;
@@ -73,23 +73,23 @@ public:
         });
         map.insert(path, future);
     }
-    static QPixmap get(QString path) {
+    static QPixmap get(const QString &path) {
         return map.value(path).result();
     }
-    static bool has(QString path) {
+    static bool has(const QString &path) {
         return map.contains(path);
     }
-    static void set(QString path, QPixmap pixmap) {
+    static void set(const QString &path, const QPixmap &pixmap) {
         map.insert(path, QtFuture::makeReadyFuture(pixmap));
     }
-    static void cacheOnly(QList<QString> &paths) {
+    static void cacheOnly(const QList<QString> &paths) {
         QList<QString> keys = map.keys();
         for (QString &path : keys) {
             if (!paths.contains(path)) {
                 map.remove(path);
             }
         }
-        for (QString &path : paths) {
+        for (const QString &path : paths) {
             add(path);
         }
     }

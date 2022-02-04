@@ -66,7 +66,7 @@ void MainWindow::handleInputPath(QString inputPath) {
     if (state == DS::NotExists) {
         return;
     }
-    
+
     if (state == DS::Ready) { // Opening a new file from the same directory, for example.
         update();
         return;
