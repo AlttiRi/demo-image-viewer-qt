@@ -32,6 +32,8 @@ private:
     void updateStatusBar();
     void logProgramArguments();
 
+    void cacheAdjacentImages();
+
     void next();
     void prev();    
     void first();

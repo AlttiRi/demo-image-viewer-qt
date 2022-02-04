@@ -96,6 +96,7 @@ void MainWindow::handleInputPath(QString inputPath) {
     }).then([&](DirState state) {
         if (state == DS::Ready) {
             update();
+            cacheAdjacentImages();
         } else if (state == DS::Empty) {
             ui->label_Image->setText("[No Images]");
         }
@@ -147,15 +148,26 @@ void MainWindow::updateStatusBar() {
 
 
 void MainWindow::displayImage(QString imagePath) {
-    image = QPixmap(imagePath);
+    if (Cache::has(imagePath)) {
+        image = Cache::get(imagePath);
+    } else {
+        image = QPixmap(imagePath);
+        Cache::set(imagePath, image);
+    }
+
     const int maxWidth = 1024;
     const int maxHeight = 728;
     int width  = image.width()  < maxWidth  ? image.width()  : maxWidth;
     int height = image.height() < maxHeight ? image.height() : maxHeight;
     ui->label_Image->setPixmap(image.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    cacheAdjacentImages();
 }
 
-
+void MainWindow::cacheAdjacentImages() {
+    QList<QString> paths = fileList.pathsRange(1, 1);
+    Cache::cacheOnly(paths);
+}
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
     const QMimeData* mimeData = event->mimeData();

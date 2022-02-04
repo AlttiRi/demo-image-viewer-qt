@@ -6,7 +6,8 @@
 #include <QDir>
 #include <QImageReader>
 #include <QElapsedTimer>
-
+#include <QPixmap>
+#include <QtConcurrent>
 
 class Timer {
 public:
@@ -15,13 +16,13 @@ public:
     static void start(QString name) {
         QElapsedTimer timer;
         timer.start();
-        Timer::map.insert(name, timer);
+        map.insert(name, timer);
     }
     static int elapsed(QString name) {
-        if (!Timer::map.contains(name)) {
+        if (!map.contains(name)) {
             qDebug().noquote() << "[timer][" + name + "]: Not found.";
         }
-        int time = Timer::map.take(name).elapsed();
+        int time = map.take(name).elapsed();
         qDebug().noquote() << "[timer][" + name + "]:" << time << "ms";
         return time;
     }
@@ -53,6 +54,46 @@ public:
     FileEntry() {}
 };
 
+class Cache {
+    static inline int num = 0;
+public:
+    static inline QMap<QString, QFuture<QPixmap>> map;
+    static void add(QString path) {
+        if (Cache::has(path)) {
+            qDebug() << "has:" << path;
+            return;
+        }
+        qDebug() << "cache:" << path;
+        int i = num++;
+        QFuture<QPixmap> future = QtConcurrent::run([path, i]() {
+            Timer::start("Cache QPixmap [" + QString::number(i) + "]");
+            QPixmap pixmap(path);
+            Timer::elapsed("Cache QPixmap [" + QString::number(i) + "]");
+            return pixmap;
+        });
+        map.insert(path, future);
+    }
+    static QPixmap get(QString path) {
+        return map.value(path).result();
+    }
+    static bool has(QString path) {
+        return map.contains(path);
+    }
+    static void set(QString path, QPixmap pixmap) {
+        map.insert(path, QtFuture::makeReadyFuture(pixmap));
+    }
+    static void cacheOnly(QList<QString> &paths) {
+        QList<QString> keys = map.keys();
+        for (QString &path : keys) {
+            if (!paths.contains(path)) {
+                map.remove(path);
+            }
+        }
+        for (QString &path : paths) {
+            add(path);
+        }
+    }
+};
 
 class DirState {
 public:
@@ -83,7 +124,7 @@ public:
         return fileEntryList.at(selectedFileEntryIndex);
     };
     QString getSelectedFileEntryPath() {
-        return dirPath + "/" + getSelectedFileEntry().name;
+        return getPath(getSelectedFileEntry());
     };
     QString getDirPath() {
         return dirPath;
@@ -120,11 +161,38 @@ public:
         return formats;
     }
 
+    QList<QString> pathsRange(int left, int right) {
+        int from = selectedFileEntryIndex - left;
+        if (from < 0) {
+            from = 0;
+        }
+        int to = selectedFileEntryIndex + right;
+        const int count = getCount();
+        if (to >= count) {
+            if (count > 0) {
+                to = count - 1;
+            } else {
+                to = 0;
+            }
+        }
+        // qDebug() << from << to;
+        QList<QString> result;
+        for (int i = from; i <= to; i++) {
+             result << getPath(fileEntryList.at(i));
+        }
+        // qDebug() << result;
+        return result;
+    }
+
 private:
     QString dirPath = "";
     QList<FileEntry> fileEntryList;
     int selectedFileEntryIndex = 0;
     DirState state = DS::Empty;
+
+    QString getPath(FileEntry entry) {
+        return dirPath + "/" + entry.name;
+    };
 
     QList<QFileInfo> getFileInfoList(QString path) {
         QDir dir(path);
