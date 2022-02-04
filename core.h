@@ -10,7 +10,7 @@
 #include <QtConcurrent>
 
 class Timer {
-public:
+private:
     inline static QMap<QString, QElapsedTimer> map;
 public:
     static void start(QString name) {
