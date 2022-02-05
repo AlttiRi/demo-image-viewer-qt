@@ -122,6 +122,7 @@ void MainWindow::update() {
     updateTitle();
     updateStatusBar();
     setOrderDirectionInButtons();
+    updateMoveButtons();
 }
 void MainWindow::updateTitle() {
     if (fileList.getState() == DS::Preview) {
@@ -139,11 +140,27 @@ void MainWindow::updateStatusBar() {
     QLocale locale = this->locale();
     QString size = locale.formattedDataSize(entry.size);
     ui->statusbar->showMessage(
-                "Size: "  + size                                            + ",   " +
+                "Size: "  + size                                                                           + ",   " +
                 "mtime: " + entry.mtime.toTimeSpec(Qt::OffsetFromUTC).toString("yyyy.MM.dd hh:mm:ss.zzz") + "Z,   " +
                 "btime: " + entry.btime.toTimeSpec(Qt::OffsetFromUTC).toString("yyyy.MM.dd hh:mm:ss.zzz") + "Z,   " +
                 QString::number(image.width()) + "x" + QString::number(image.height())
     );
+}
+void MainWindow::updateMoveButtons() { //todo: keep the state, update only if it was changed
+    if (fileList.isFirst()) {
+        ui->pushButton_First->setStyleSheet("color: gray");
+        ui->pushButton_Prev->setStyleSheet("color: gray");
+    } else {
+        ui->pushButton_First->setStyleSheet("color: black");
+        ui->pushButton_Prev->setStyleSheet("color: black");
+    }
+    if (fileList.isLast()) {
+        ui->pushButton_Last->setStyleSheet("color: gray");
+        ui->pushButton_Next->setStyleSheet("color: gray");
+    } else {
+        ui->pushButton_Last->setStyleSheet("color: black");
+        ui->pushButton_Next->setStyleSheet("color: black");
+    }
 }
 
 

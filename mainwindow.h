@@ -38,6 +38,7 @@ private:
     void prev();    
     void first();
     void last();
+    void updateMoveButtons();
 
     void sortBySize();
     void sortByMtime();
