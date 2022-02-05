@@ -43,8 +43,8 @@ void MainWindow::init() {
         handleInputPath(argv1);
     } else {
         // [Note]: Comment it on the release.
-        //QString debugPath = "M:\\Downloads\\";
-        //handleInputPath(debugPath);
+        // QString debugPath = "M:\\Downloads\\";
+        // handleInputPath(debugPath);
     }
 }
 
@@ -96,7 +96,6 @@ void MainWindow::handleInputPath(QString inputPath) {
     }).then([&](DirState state) {
         if (state == DS::Ready) {
             update();
-            cacheAdjacentImages();
         } else if (state == DS::Empty) {
             ui->label_Image->setText("[No Images]");
         }
@@ -123,6 +122,8 @@ void MainWindow::update() {
     updateStatusBar();
     setOrderDirectionInButtons();
     updateMoveButtons();
+
+    cacheAdjacentImages();
 }
 void MainWindow::updateTitle() {
     if (fileList.getState() == DS::Preview) {
@@ -177,8 +178,6 @@ void MainWindow::displayImage(QString imagePath) {
     int width  = image.width()  < maxWidth  ? image.width()  : maxWidth;
     int height = image.height() < maxHeight ? image.height() : maxHeight;
     ui->label_Image->setPixmap(image.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
-    cacheAdjacentImages();
 }
 
 void MainWindow::cacheAdjacentImages() {
