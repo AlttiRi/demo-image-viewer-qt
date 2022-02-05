@@ -10,7 +10,6 @@
 #include <QtConcurrent>
 
 class Timer {
-private:
     inline static QMap<QString, QElapsedTimer> map;
 public:
     static void start(QString name) {
@@ -56,8 +55,8 @@ public:
 
 class Cache {
     static inline int num = 0;
-public:
     static inline QMap<QString, QFuture<QPixmap>> map;
+public:    
     static void add(const QString &path) {
         if (Cache::has(path)) {
             // qDebug() << "has:" << path;
