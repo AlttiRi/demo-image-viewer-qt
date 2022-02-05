@@ -7,6 +7,7 @@ It's a **demonstration** only image viewer made with Qt6.
 
 ---
 
+## Features
 - Opens an image in a time independent of the count of images in a directory where it is located.
 - Decodes 8.3  file names to long file names with Win API (`GetLongPathNameW`). An 8.3 can be faced on a user input of a file with long path (260+ chars) from disc C from Windows Explorer:
   on Drag'n'Drop and when a user opens an image with a double click (the image path is passed as a command line argument to the program.)
