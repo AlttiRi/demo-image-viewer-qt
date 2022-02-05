@@ -51,6 +51,9 @@ public:
         this->fileInfo = fileInfo;
     }
     FileEntry() {}
+    friend QDebug &operator<<(QDebug &stream, const FileEntry &target) {
+        return stream << target.name;
+    }
 };
 
 class Cache {
@@ -408,34 +411,40 @@ public:
     }
 
 
+    bool isFirst() {
+        return selectedFileEntryIndex == 0;
+    }
+    bool isLast() {
+        if (fileEntryList.length() == 0) {
+            return true;
+        }
+        return selectedFileEntryIndex == fileEntryList.length() - 1;
+    }
+
     bool goNext() {
-        if (selectedFileEntryIndex < fileEntryList.length() - 1) {
+        if (!isLast()) {
             selectedFileEntryIndex++;
             return true;
         }
         return false;
     }
     bool goBack() {
-        if (selectedFileEntryIndex > 0) {
+        if (!isFirst()) {
             selectedFileEntryIndex--;
             return true;
         }
         return false;
     }
     bool goFirst() {
-        if (selectedFileEntryIndex != 0) {
+        if (!isFirst()) {
             selectedFileEntryIndex = 0;
             return true;
         }
         return false;
     }
     bool goLast() {
-        if (fileEntryList.length() == 0) {
-            return false;
-        }
-        int last = fileEntryList.length() - 1;
-        if (selectedFileEntryIndex != last) {
-            selectedFileEntryIndex = last;
+        if (!isLast()) {
+            selectedFileEntryIndex = fileEntryList.length() - 1;
             return true;
         }
         return false;
