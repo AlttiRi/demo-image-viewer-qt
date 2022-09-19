@@ -9,11 +9,12 @@ It's a **demonstration** only image viewer made with Qt6.
 
 ## Features
 - Opens an image in a time independent of the count of images in a directory where it is located.
+- Handles the images of the directory in a separated thread with `QtConcurrent::run`.
+- The directory parsing is fast. It does not use `QFileInfo` is `std::sort`, but a custom struct.
+- Handles the directory only once, until it is changed. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's not needed to do, just find the file by name in the list structure.)
 - Decodes 8.3  file names to long file names with Win API (`GetLongPathNameW`). An 8.3 can be faced on a user input of a file with long path (260+ chars) from disc C from Windows Explorer:
   on Drag'n'Drop and when a user opens an image with a double click (the image path is passed as a command line argument to the program.)
 - Opens images with a long path starts with [`\\?\`](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#win32-file-namespaces) ([`\\?\UNC\`](https://web.archive.org/web/1/https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#maximum-path-length-limitation)).
-- Handles the images of the directory in a separated thread with `QtConcurrent::run`.
-- Handles the directory only once, until it is changed. (For example, drag'n'dropping a file from the same directory does not trigger the directory parsing, since it's not needed to do, just find the file by name in the list structure.)
 - Preloades the adjacent images in a separate thread.
 - Sorts by mtime, btime, size.
 - Updates the image position (in the title) on the sorting change.
