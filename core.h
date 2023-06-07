@@ -59,7 +59,7 @@ public:
 class Cache {
     static inline int num = 0;
     static inline QMap<QString, QFuture<QPixmap>> map;
-public:    
+public:
     static void add(const QString &path) {
         if (Cache::has(path)) {
             // qDebug() << "has:" << path;
@@ -218,7 +218,7 @@ private:
             if (isSupportedByExt(fileName, extensions)) {
                 fileInfoListFiltered << fileInfo;
             }
-        }        
+        }
         return fileInfoListFiltered;
     }
 
@@ -373,14 +373,15 @@ public:
                       if (a.mtime < b.mtime) {
                           result = true;
                       } else if (a.mtime == b.mtime) {
-                          result = a.btime < b.btime;
+                          result = a.btime < b.btime; // extra sorting by btime, if mtime of both files is the same
                       }
-                      return asc ? result : !result;
 
-                      /** Try this slow shit. 3200-3600 ms vs 6 ms — up to 600 times slower! **/
-                      //return a.fileInfo.lastModified() < b.fileInfo.lastModified();
+                      /** Try this slow shit instead. 3200-3600 ms vs 6 ms — up to 600 times slower! (When you sort 10k+ images) **/
+                      // bool result = a.fileInfo.lastModified() < b.fileInfo.lastModified();
                       /** That is OK: **/
-                      //return a.mtime < b.mtime;
+                      // bool result = a.mtime < b.mtime;
+
+                      return asc ? result : !result;
                   }
         );
         selectedFileEntryIndex = indexOfByFileName(selected.name);
@@ -392,7 +393,8 @@ public:
         FileEntry selected = getSelectedFileEntry();
         std::sort(fileEntryList.begin(), fileEntryList.end(),
                   [asc](const FileEntry& a, const FileEntry& b) {
-                      return asc ? a.btime < b.btime : a.btime > b.btime;
+                      return asc ? a.btime < b.btime : a.btime > b.btime; // fine
+                      // return asc ? a.fileInfo.birthTime() < b.fileInfo.birthTime() : a.fileInfo.birthTime() > b.fileInfo.birthTime(); // slow shit
                   }
         );
         selectedFileEntryIndex = indexOfByFileName(selected.name);
