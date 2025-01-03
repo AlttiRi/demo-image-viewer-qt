@@ -82,7 +82,7 @@ public:
         return map.contains(path);
     }
     static void set(const QString &path, const QPixmap &pixmap) {
-        map.insert(path, QtFuture::makeReadyFuture(pixmap));
+        map.insert(path, QtFuture::makeReadyValueFuture(pixmap));
     }
     static void cacheOnly(const QList<QString> &paths) {
         QList<QString> keys = map.keys();
