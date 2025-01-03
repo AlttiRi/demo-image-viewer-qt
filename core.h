@@ -369,17 +369,18 @@ public:
         FileEntry selected = getSelectedFileEntry();
         std::sort(fileEntryList.begin(), fileEntryList.end(),
                   [asc](const FileEntry& a, const FileEntry& b) {
-                      bool result = false;
-                      if (a.mtime < b.mtime) {
-                          result = true;
-                      } else if (a.mtime == b.mtime) {
+                      /** Try this slow shit. 3200-3600 ms vs 6 ms — up to 600 times slower! (When you sort 10k+ images) **/
+                      // bool result = a.fileInfo.lastModified() < b.fileInfo.lastModified();
+
+                      /** This is much better (requires Qt6.6), but it's still slow: **/
+                      // bool result = a.fileInfo.lastModified(QTimeZone::UTC) < b.fileInfo.lastModified(QTimeZone::UTC);
+
+                      /** This is the best: **/
+                      bool result = a.mtime < b.mtime;
+
+                      if (a.mtime == b.mtime) {
                           result = a.btime < b.btime; // extra sorting by btime, if mtime of both files is the same
                       }
-
-                      /** Try this slow shit instead. 3200-3600 ms vs 6 ms — up to 600 times slower! (When you sort 10k+ images) **/
-                      // bool result = a.fileInfo.lastModified() < b.fileInfo.lastModified();
-                      /** That is OK: **/
-                      // bool result = a.mtime < b.mtime;
 
                       return asc ? result : !result;
                   }
