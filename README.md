@@ -66,4 +66,3 @@ than that
 So, store all required fields of `QFileInfo` in your own data struct.
 
 Try by yourself (uncomment the line 307 and comment lines 298-304): https://github.com/AlttiRi/demo-image-viewer/blob/ad9ac9b1c9d78244462064983e676542700e96d9/core.h#L296-L311
-
