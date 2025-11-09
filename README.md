@@ -66,3 +66,26 @@ than that
 So, store all required fields of `QFileInfo` in your own data struct.
 
 Try by yourself (uncomment the line 307 and comment lines 298-304): https://github.com/AlttiRi/demo-image-viewer/blob/ad9ac9b1c9d78244462064983e676542700e96d9/core.h#L296-L311
+
+---
+
+### How to build
+
+- Click on the green triangle button to create `demo-imgv.exe` file. Use release build.
+- Open the build folder (`./build/Desktop_Qt_6_10_0_MinGW_64_bit-Release/release`)
+- Delete all files (`*.o`, `*.cpp`, `*.h`) except `demo-imgv.exe` file.
+- Drag and drop `demo-imgv.exe` file from the File Explorer on `windeployqt6` (`C:\Qt\6.10.0\mingw_64\bin\windeployqt6.exe`) to create all reuired files (DLLs and others) for the `demo-imgv.exe` file.
+- Optionally, remove unneeded files to make the "lite" build. You only needed:
+  - `demo-imgv.exe`
+  - `Qt6Core.dll`
+  - `Qt6Gui.dll`
+  - `Qt6Widgets.dll`
+  - `libgcc_s_seh-1.dll`
+  - `libstdc++-6.dll`
+  - `libwinpthread-1.dll`
+  - `imageformats/*` (`qgif.dll`, `qico.dll`, `qjpeg.dll`, `qsvg.dll`)
+  - `platforms/qwindows.dll`
+  - `styles/qmodernwindowsstyle.dll` (optionally)
+
+  (So, remove: `D3Dcompiler_47.dll`, `Qt6Network.dll`, `Qt6Svg.dll`, `opengl32sw.dll`, `generic/`, `iconengines/`, `networkinformation/`, `tls/`, `translations/`)
+
