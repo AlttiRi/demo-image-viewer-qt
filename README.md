@@ -71,7 +71,7 @@ Try by yourself (uncomment the line 307 and comment lines 298-304): https://gith
 
 ### How to build
 
-- Click on the green triangle button to create `demo-imgv.exe` file. Use release build.
+- Click on the green triangle button in **Qt Creator** to create `demo-imgv.exe` file. Use release build.
 - Open the build folder (`./build/Desktop_Qt_6_10_0_MinGW_64_bit-Release/release`)
 - Delete all files (`*.o`, `*.cpp`, `*.h`) except `demo-imgv.exe` file.
 - Drag and drop `demo-imgv.exe` file from the File Explorer on `windeployqt6` (`C:\Qt\6.10.0\mingw_64\bin\windeployqt6.exe`) to create all reuired files (DLLs and others) for the `demo-imgv.exe` file.
